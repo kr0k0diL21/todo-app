@@ -47,29 +47,29 @@ const deleteTodo = (id: number) => {
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4 md:p-8">
-    <!-- Hintergrund-Dekoration -->
-    <div class="fixed inset-0 -z-10 overflow-hidden">
-      <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div class="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+    <!-- Hintergrund-Dekoration – sanfter -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-2000"></div>
+      <div class="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-4000"></div>
     </div>
 
     <div class="max-w-2xl mx-auto">
       <!-- Glasmorphism Card -->
       <div class="backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-8 border border-white/20">
         
-        <!-- Header mit Glow -->
-        <h1 class="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8 animate-pulse">
+        <!-- Header – ohne Puls, nur Gradient -->
+        <h1 class="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8">
           Deine Todos
         </h1>
 
-        <!-- Eingabe mit Glow-Effekt -->
+        <!-- Eingabe -->
         <div class="flex gap-3 mb-8 group">
           <input
             v-model="newTodo"
             @keyup.enter="addTodo"
             type="text"
-            placeholder="Was kommt als Nächstes? ✨"
+            placeholder="Was kommt als Nächstes?"
             class="flex-1 px-6 py-4 text-lg bg-white/50 backdrop-blur-md border border-purple-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-400 transition-all duration-300 placeholder:text-gray-400"
           />
           <button
@@ -120,19 +120,17 @@ const deleteTodo = (id: number) => {
               <span
                 :class="[
                   'text-lg font-medium transition-all duration-300',
-                  todo.completed
-                    ? 'line-through text-gray-400'
-                    : 'text-gray-800'
+                  todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
                 ]"
               >
                 {{ todo.text }}
               </span>
             </div>
 
-            <!-- Löschen mit Hover-Effekt -->
+            <!-- Löschen – weicher Übergang -->
             <button
               @click="deleteTodo(todo.id)"
-              class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-red-400 hover:text-red-600"
+              class="opacity-50 group-hover:opacity-100 transition-opacity duration-300 text-red-400 hover:text-red-600"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -166,14 +164,13 @@ const deleteTodo = (id: number) => {
 </template>
 
 <style scoped>
-/* Animation für Hintergrundblobs */
+/* Sanfte Blob-Animation */
 @keyframes blob {
   0%, 100% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
+  50% { transform: translate(20px, -30px) scale(1.05); }
 }
 .animate-blob {
-  animation: blob 7s infinite;
+  animation: blob 12s infinite ease-in-out;
 }
 .animation-delay-2000 {
   animation-delay: 2s;
@@ -182,15 +179,15 @@ const deleteTodo = (id: number) => {
   animation-delay: 4s;
 }
 
-/* Vue Transition für Liste */
+/* Sanfte Liste */
 .list-enter-active, .list-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .list-enter-from, .list-leave-to {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(15px);
 }
 .list-move {
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 </style>
